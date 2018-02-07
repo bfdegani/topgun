@@ -1,0 +1,17 @@
+{
+  "name": "topgun",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bruno Fernandes Degani",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "consign": "^0.1.6",
+    "crawler": "^1.1.2",
+    "express": "^4.16.2"
+  }
+}

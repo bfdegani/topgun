@@ -1,0 +1,21 @@
+{
+  "all_classes": "TGOQNSXVLMKHBYUZIDCJ",
+  "business_classes": "UZIDCJ",
+  "revenue_url": "https://book.latam.com/TAM/dyn/air/booking/upslDispatcher",
+  "revenue_params": "SITE=JJBKJJBK&LANGUAGE=BR&WDS_MARKET=BR&SERVICE_ID=2&COUNTRY_SITE=BR&WDS_DISABLE_REDEMPTION=&WDS_AWARD_CORPORATE_CODE=&MARKETING_CABIN=E&WDS_FORCE_SITE_UPDATE=TRUE&FORCE_OVERRIDE=TRUE&SO_SITE_QUEUE_OFFICE_ID=DONTQUEUE&SO_SITE_ADVANCED_CATEGORIES=FALSE&SO_SITE_MINIMAL_TIME=H3&SO_SITE_OFFICE_ID=SAOJJ08AW&SO_SITE_MIN_AVAIL_DATE_SPAN=H3&SO_SITE_ETKT_Q_AND_CAT=22C1&SO_SITE_BILLING_NOT_REQUIRED=FALSE&SO_SITE_ETKT_Q_OFFICE_ID=SAOJJ0120&WDS_DISABLE_REDEMPTION=&FORCE_OVERRIDE=TRUE",
+  "award_url": "https://book.latam.com/TAM/dyn/air/redemption/availability",
+  "award_params": "ENC=&utm_medium=buscador-passagens&LANGUAGE=BR&utm_source=site_multiplus&WDS_MARKET=BR&children=0&SERVICE_ID=1&ENCT=2&COUNTRY_SITE=BR&SITE=JJRDJJRD&passenger_useMyPoints=true",
+  "commom_search_params": "adults=1&children=0&infants=0&TRIP_TYPE=O",
+  "flight_search_params": [
+    {
+       "B_DATE_1": "201804100000",
+       "B_LOCATION_1": "CGH",
+       "E_LOCATION_1": "GRU"
+    },
+    {
+       "B_DATE_1": "201804100000",
+       "B_LOCATION_1": "GRU",
+       "E_LOCATION_1": "MIA"
+    }
+  ]
+}

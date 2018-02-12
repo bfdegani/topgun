@@ -9,9 +9,7 @@
   "author": "Bruno Fernandes Degani",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "consign": "^0.1.6",
     "crawler": "^1.1.2",
-    "express": "^4.16.2"
+    "nedb": "^1.8.0"
   }
 }

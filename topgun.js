@@ -14,6 +14,7 @@ var award_url =  cfg.award_url + '?' + cfg.award_params + '&' + cfg.commom_searc
 var debug_mode = cfg.debug_mode;
 var df = require('dateformat');
 
+//debug_mode
 function debugLog(s){
   if(debug_mode) console.log(s);
 }
@@ -95,65 +96,76 @@ var crawler_cfg = {
   }
 }
 
+//comparação de tarifas revenue x award
 function compareFares(callback){
   var results = 0;
-  dbFlights.find({award:true}, function(err, flights){
+  dbFlights.find({award:false}, function(err, flights){
     if(err) console.error(err);
 
     debugLog('------------------ comparando classes tarifárias');
     for( var i = 0; i < flights.length; i++) {
-      dbFlights.find({'flightnumber': flights[i].flightnumber}).sort({'award': -1}).exec(function(err, f){
+      dbFlights.find({'flightnumber': flights[i].flightnumber}).sort({'award': 1}).exec(function(err, f){
         if(err) console.error(err);
         debugLog('------------------');
 
-        var fa = f[0]; // voo award
-        var fr = f[1]; // voo revenue
-        var ok = 0;
-        var nok = 0;
+        var fr = f[0]; // voo revenue
 
-        for(var a = 0; a < fa.fares.length; a++){
-          for(var r = 0; r < fr.fares.length; r++){
-            if(fa.fares[a].business == fr.fares[r].business && fa.flightnumber == fr.flightnumber) {
-              debugLog(fa.flightnumber + ' AWARD ' + (fa.business ? '(B)' : '(E)') + ': ' +
-              fa.fares[a].cellFareFamily + ', ' + fa.fares[a].cellFareclass + ', ' +
-              fa.fares[a].cellPriceInReportingCurrency + ', ' + (cfg.all_classes.indexOf(fa.fares[a].cellFareclass.substring(0,1))));
-              debugLog(fr.flightnumber +' REVENUE ' + (fr.business ? '(B)' : '(E)') + ': ' +
-              fr.fares[r].cellFareFamily + ', '+ fr.fares[r].cellFareclass + ', ' +
-              fr.fares[r].cellPriceInReportingCurrency + ', ' + (cfg.all_classes.indexOf(fr.fares[r].cellFareclass.substring(0,1))));
+        var resultFlight = {
+          flightnumber: fr.flightnumber,
+          operatedby: fr.operatedby,
+          departureairportcode: fr.departureairportcode,
+          arrivalairportcode: fr.arrivalairportcode,
+          departuredate: fr.departuredate,
+          resultdate: df(new Date(), 'yyyymmdd'),
+          revenuefares: fr.fares
+        }
 
-              if(cfg.all_classes.indexOf(fa.fares[a].cellFareclass.substring(0,1)) > cfg.all_classes.indexOf(fr.fares[r].cellFareclass.substring(0,1))){
-                debugLog('NOK');
-                nok++;
-              }
-              else{
-                debugLog('OK');
-                ok++;
+        var fa = f[1]; //voo award
+
+        if(fa == null){ // não encontrou tarifa award pro voo selecionado
+          debugLog(fr.flightnumber + '(' + fr.departureairportcode + ' -> ' + fr.arrivalairportcode + '): ' + ' não foram encontradas tarifas AWARD');
+          resultFlight.awardfares = null;
+          resultFlight.resultok = false;
+        }
+        else{
+          //compara tarifas award e revenue
+          var ok = 0;
+          var nok = 0;
+
+          for(var a = 0; a < fa.fares.length; a++){
+            for(var r = 0; r < fr.fares.length; r++){
+              if(fa.fares[a].business == fr.fares[r].business && fa.flightnumber == fr.flightnumber) {
+                debugLog(fa.flightnumber + ' AWARD ' + (fa.business ? '(B)' : '(E)') + ': ' +
+                fa.fares[a].cellFareFamily + ', ' + fa.fares[a].cellFareclass + ', ' +
+                fa.fares[a].cellPriceInReportingCurrency + ', ' + (cfg.all_classes.indexOf(fa.fares[a].cellFareclass.substring(0,1))));
+                debugLog(fr.flightnumber +' REVENUE ' + (fr.business ? '(B)' : '(E)') + ': ' +
+                fr.fares[r].cellFareFamily + ', '+ fr.fares[r].cellFareclass + ', ' +
+                fr.fares[r].cellPriceInReportingCurrency + ', ' + (cfg.all_classes.indexOf(fr.fares[r].cellFareclass.substring(0,1))));
+
+                if(cfg.all_classes.indexOf(fa.fares[a].cellFareclass.substring(0,1)) > cfg.all_classes.indexOf(fr.fares[r].cellFareclass.substring(0,1))){
+                  debugLog('NOK');
+                  nok++;
+                }
+                else{
+                  debugLog('OK');
+                  ok++;
+                }
               }
             }
           }
+          resultFlight.resultok = ok > 0;
         }
-        var resultFlight = {
-          flightnumber: fa.flightnumber,
-          operatedby: fa.operatedby,
-          departureairportcode: fa.departureairportcode,
-          arrivalairportcode: fa.arrivalairportcode,
-          departuredate: fa.departuredate,
-          revenuefares: fr.fares,
-          awardfares: fa.fares,
-          resultdate: df(new Date(), 'yyyymmdd'),
-          resultok: ok > 0
-        };
 
         dbResults.insert(resultFlight, function(db_err){
           if(db_err) console.error(db_err);
-          eventEmitter.emit('resultAdded');
+          eventEmitter.emit('resultAdded'); //notifica fim da comparação
         });
 
-        debugLog(fa.flightnumber + '(' + fa.departureairportcode + ' -> ' + fa.arrivalairportcode + '): ' + (ok > 0 ? cfg.ok_msg : cfg.nok_msg));
+        debugLog(fr.flightnumber + '(' + fr.departureairportcode + ' -> ' + fr.arrivalairportcode + '): ' + (ok > 0 ? cfg.ok_msg : cfg.nok_msg));
 
       });
     }
-    eventEmitter.on('resultAdded', function(){
+    eventEmitter.on('resultAdded', function(){ //controla retorno das comparações de tarifas (executadas assíncronamente)
       results++;
       if(results == flights.length){
         callback();
@@ -161,6 +173,7 @@ function compareFares(callback){
     });
   });
 }
+
 /* MAIN */
 var c = new crawler(crawler_cfg);
 cfg.flight_search_params.forEach(function(fsp) {

@@ -1,4 +1,7 @@
 {
+  "debug_mode": false,
+  "ok_msg": "OK - encontrada pelo menos uma tarifa AWARD de classe igual ou mais barata que as tarifas REVENUE",
+  "nok_msg": "NOK - encontradas apenas tarifas AWARD de classes mais caras que as tarifas REVENUE",
   "all_classes": "TGOQNSXVLMKHBYUZIDCJ",
   "business_classes": "UZIDCJ",
   "revenue_url": "https://book.latam.com/TAM/dyn/air/booking/upslDispatcher",
@@ -8,14 +11,64 @@
   "commom_search_params": "adults=1&children=0&infants=0&TRIP_TYPE=O",
   "flight_search_params": [
     {
-       "B_DATE_1": "201804100000",
-       "B_LOCATION_1": "CGH",
-       "E_LOCATION_1": "GRU"
+      "days": "15",
+      "departureairportcode": "CGH",
+      "arrivalairportcode": "SDU"
     },
     {
-       "B_DATE_1": "201804100000",
-       "B_LOCATION_1": "GRU",
-       "E_LOCATION_1": "MIA"
+      "days": "15",
+      "departureairportcode": "CGH",
+      "arrivalairportcode": "BSB"
+    },
+    {
+      "days": "15",
+      "departureairportcode": "SDU",
+      "arrivalairportcode": "BSB"
+    },
+    {
+      "days": "15",
+      "departureairportcode": "CGH",
+      "arrivalairportcode": "SSA"
+    },
+    {
+      "days": "15",
+      "departureairportcode": "GRU",
+      "arrivalairportcode": "SCL"
+    },
+    {
+      "days": "15",
+      "departureairportcode": "GIG",
+      "arrivalairportcode": "SCL"
+    },
+    {
+       "days": "15",
+       "departureairportcode": "GRU",
+       "arrivalairportcode": "MIA"
+    },
+    {
+       "days": "15",
+       "departureairportcode": "GIG",
+       "arrivalairportcode": "MIA"
+    },
+    {
+       "days": "15",
+       "departureairportcode": "GRU",
+       "arrivalairportcode": "JFK"
+    },
+    {
+       "days": "15",
+       "departureairportcode": "GRU",
+       "arrivalairportcode": "CDG"
+    },
+    {
+       "days": "15",
+       "departureairportcode": "GRU",
+       "arrivalairportcode": "MAD"
+    },
+    {
+       "days": "15",
+       "departureairportcode": "GRU",
+       "arrivalairportcode": "LHR"
     }
   ]
 }

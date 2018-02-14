@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "crawler": "^1.1.2",
+    "dateformat": "^3.0.3",
     "nedb": "^1.8.0"
   }
 }

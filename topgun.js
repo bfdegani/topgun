@@ -145,12 +145,13 @@ function compareFares(callback){
                 if(cfg.all_classes.indexOf(fa.fares[a].cellFareclass.substring(0,1)) > cfg.all_classes.indexOf(fr.fares[r].cellFareclass.substring(0,1))){
                   debugLog('NOK');
                   nok++;
-                }
-                else{
-                  debugLog('OK');
-                  ok++;
+                  break;
                 }
               }
+            }
+            if(nok == 0){
+              debugLog('OK');
+              ok++;
             }
           }
           resultFlight.resultok = ok > 0;

@@ -121,6 +121,7 @@ function compareFares(callback){
         }
 
         var fa = f[1]; //voo award
+        resultFlight.resultok = false;
 
         if(fa == null){ // não encontrou tarifa award pro voo selecionado
           debugLog(fr.flightnumber + '(' + fr.departureairportcode + ' -> ' + fr.arrivalairportcode + '): ' + ' não foram encontradas tarifas AWARD');
@@ -129,8 +130,7 @@ function compareFares(callback){
         }
         else{
           //compara tarifas award e revenue
-          var ok = 0;
-          var nok = 0;
+          var ok = true;
 
           for(var a = 0; a < fa.fares.length; a++){
             for(var r = 0; r < fr.fares.length; r++){
@@ -144,17 +144,17 @@ function compareFares(callback){
 
                 if(cfg.all_classes.indexOf(fa.fares[a].cellFareclass.substring(0,1)) > cfg.all_classes.indexOf(fr.fares[r].cellFareclass.substring(0,1))){
                   debugLog('NOK');
-                  nok++;
+                  ok = false;
                   break;
                 }
               }
             }
-            if(nok == 0){
+            if(ok){
               debugLog('OK');
-              ok++;
+              resultFlight.resultok = true;
+              break;
             }
           }
-          resultFlight.resultok = ok > 0;
         }
 
         dbResults.insert(resultFlight, function(db_err){

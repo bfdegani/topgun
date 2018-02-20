@@ -1,7 +1,7 @@
 {
   "debug_mode": false,
-  "ok_msg": "OK - Voos com pelo menos uma tarifa AWARD de classe igual ou mais barata que a tarifa REVENUE mais barata",
-  "nok_msg": "NOK - Voos sem tarifas AWARD de classe igual ou mais barata que a tarifa REVENUE mais barata",
+  "ok_msg": "OK - Voos com pelo menos uma tarifa AWARD de classe equivalente ou mais barata que a tarifa REVENUE mais barata",
+  "nok_msg": "NOK - Voos sem tarifas AWARD de classe equivalente ou mais barata que a tarifa REVENUE mais barata",
   "all_classes": "TGOQNSXVLMKHBYUZIDCJ",
   "business_classes": "UZIDCJ",
   "revenue_url": "https://book.latam.com/TAM/dyn/air/booking/upslDispatcher",

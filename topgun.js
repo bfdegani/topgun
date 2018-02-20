@@ -2,12 +2,16 @@
 // Bruno Degani
 // 2018-02-06
 
-// evnts
+//MailSender
+var mailcfg = require('./config/emailconfig.json');
+var mailsender = require('./util/MailSender.js');
+
+// events
 var events = require('events');
 var eventEmitter = new events.EventEmitter();
 eventEmitter.setMaxListeners(1000);
 
-//config
+//search config
 var cfg = require('./config/config.json');
 var revenue_url = cfg.revenue_url + '?' + cfg.revenue_params + '&' + cfg.commom_search_params;
 var award_url =  cfg.award_url + '?' + cfg.award_params + '&' + cfg.commom_search_params;
@@ -199,10 +203,31 @@ c.on('drain', function(){
     dbResults.find({}).sort({'resultok': 1, 'departureairportcode': 1, 'arrivalairportcode': 1, 'departuredate': 1, 'flightnumber': 1}).exec(function(db_err, res){
       if(db_err) console.error(db_err);
       debugLog('------------------ resultados');
+      var output = cfg.nok_msg + '\n';
+      var resultok = false;
+
       for(var r = 0; r < res.length; r++){
-        console.log(res[r].departureairportcode + '->' + res[r].arrivalairportcode + ' (' + res[r].departuredate + ') ' + res[r].flightnumber + ': ' +
-                    (res[r].resultok ? cfg.ok_msg : cfg.nok_msg));
+        if(!resultok && res[r].resultok){
+          output += cfg.ok_msg + '\n';
+          resultok = true;
+        }
+        output += res[r].departureairportcode + '->' +
+                  res[r].arrivalairportcode + ' (' +
+                  res[r].departuredate + ') ' +
+                  res[r].flightnumber +
+                  '\n';
+                  //': ' + (res[r].resultok ? cfg.ok_msg : cfg.nok_msg) + '\n';
       }
+      console.log(output);
+      mailcfg.options.text = output;
+      mailsender.send(mailcfg.smtp, mailcfg.options, function(ms_err, ms_res){
+        if(ms_err){
+          console.error(ms_err);
+        }
+        else {
+          debugLog('e-mail enviado com sucesso:\n' + ms_res.response);
+        }
+      });
     });
   });
 });

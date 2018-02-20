@@ -1,0 +1,20 @@
+{
+
+  "smtp": {
+    "host":"mailrelay",
+    "port":"25",
+    "secure": false,
+    "tls": {
+        "rejectUnauthorized": false
+    }
+  },
+  "options": {
+    "subject": "Comparação de tarifas REVENUE x AWARD",
+    "from": "Topgun <topgun@pontosmultiplus.com.br>",
+    "to": "alexandre.ferri@pontosmultiplus.com.br",
+    "attachments": [{
+        "filename": "voos.txt",
+        "path": "./flights.db"
+      }]
+  }
+}

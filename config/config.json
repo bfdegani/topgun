@@ -2,7 +2,7 @@
   "debug_mode": false,
   "ok_msg": "OK - Voos com pelo menos uma tarifa AWARD de classe equivalente ou mais barata que a tarifa REVENUE mais barata",
   "nok_msg": "NOK - Voos sem tarifas AWARD de classe equivalente ou mais barata que a tarifa REVENUE mais barata",
-  "all_classes": "TGOQNSXVLMKHBYUZIDCJ",
+  "all_classes": "ATGOQNSXVLMKHBYRPWUZIDCJ",
   "business_classes": "UZIDCJ",
   "revenue_url": "https://book.latam.com/TAM/dyn/air/booking/upslDispatcher",
   "revenue_params": "SITE=JJBKJJBK&LANGUAGE=BR&WDS_MARKET=BR&SERVICE_ID=2&COUNTRY_SITE=BR&WDS_DISABLE_REDEMPTION=&WDS_AWARD_CORPORATE_CODE=&MARKETING_CABIN=E&WDS_FORCE_SITE_UPDATE=TRUE&FORCE_OVERRIDE=TRUE&SO_SITE_QUEUE_OFFICE_ID=DONTQUEUE&SO_SITE_ADVANCED_CATEGORIES=FALSE&SO_SITE_MINIMAL_TIME=H3&SO_SITE_OFFICE_ID=SAOJJ08AW&SO_SITE_MIN_AVAIL_DATE_SPAN=H3&SO_SITE_ETKT_Q_AND_CAT=22C1&SO_SITE_BILLING_NOT_REQUIRED=FALSE&SO_SITE_ETKT_Q_OFFICE_ID=SAOJJ0120&WDS_DISABLE_REDEMPTION=&FORCE_OVERRIDE=TRUE",

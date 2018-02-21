@@ -201,25 +201,38 @@ cfg.flight_search_params.forEach(function(fsp) {
 c.on('drain', function(){
   compareFares(function(){
     dbResults.find({}).sort({'resultok': 1, 'departureairportcode': 1, 'arrivalairportcode': 1, 'departuredate': 1, 'flightnumber': 1}).exec(function(db_err, res){
-      if(db_err) console.error(db_err);
+      if(db_err) {
+        console.error(db_err);
+        return;
+      }
+
       debugLog('------------------ resultados');
-      var output = cfg.nok_msg + '\n';
+
       var resultok = false;
+      console.log(cfg.nok_msg);
+      var output = "<body style=\"font-family: \'Courier New\'\">";
+
+      if(!res[0].resultok) {
+        output += "<p><strong>" + cfg.nok_msg + "</strong>";
+      }
 
       for(var r = 0; r < res.length; r++){
         if(!resultok && res[r].resultok){
-          output += cfg.ok_msg + '\n';
+          console.log(cfg.ok_msg);
+          output += "<body style=\"font-family: \'Courier New\'\">" +
+                       "<p><strong>" + cfg.ok_msg + "</strong>";
           resultok = true;
         }
-        output += res[r].departureairportcode + '->' +
+        var s = res[r].departureairportcode + '->' +
                   res[r].arrivalairportcode + ' (' +
                   res[r].departuredate + ') ' +
-                  res[r].flightnumber +
-                  '\n';
-                  //': ' + (res[r].resultok ? cfg.ok_msg : cfg.nok_msg) + '\n';
+                  res[r].flightnumber;
+        console.log(s);
+        output +=  "<p>" + s;
       }
-      console.log(output);
-      mailcfg.options.text = output;
+      output += "</body>"
+      debugLog(output);
+      mailcfg.options.html = output;
       mailsender.send(mailcfg.smtp, mailcfg.options, function(ms_err, ms_res){
         if(ms_err){
           console.error(ms_err);

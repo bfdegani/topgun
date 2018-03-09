@@ -1,0 +1,5 @@
+{
+  "flight_search_params": [
+    { "days": [7],"departureairportcode":"REC", "arrivalairportcode":"GRU" }  
+  ]
+}

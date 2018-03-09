@@ -1,5 +1,4 @@
 {
-
   "smtp": {
     "host":"mailrelay",
     "port":"25",
